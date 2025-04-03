@@ -51,58 +51,105 @@ bool isPrime(int n) {
 }
 
 //problem 3
-int findGCD(int x, int y) {
-    x = abs(x);
-    y = abs(y);
-    //we use abs for absolute value so that the number is positivbe and ensure it work with negative number
-    if (x == 0 || y == 0) {
-        return false;
+//reducing given fraction to minimum terms
+// 2/4 -> 1/2
+// 4/2 -> 2/1
+// 6/8 -> 3/4
+// 30/45 -> 2/3
+// 6/6 -> 1/1
+// 1/0 -> dnf
+// -6/8 -> 3/-4
+
+
+
+class fraction {
+public:
+    int numerator;
+    int denominator;
+
+    fraction(int numerator, int denominator) : numerator(numerator), denominator(denominator){}
+
+        std::string to_string() {
+            return std::to_string(numerator) + "/" + std::to_string(denominator);
+
+        }
+
+        bool operator==(fraction &other) {
+            return this->numerator == other.numerator &&
+                this->denominator == other.denominator;
     }
-    while (x != y) {
-        int temp = y;
-        y = x;
-        x = temp % y;
+};
+
+    fraction reduce (fraction input) {
+
     }
-    return y;
-}
 
-void reducingfraction (int num, int dem) {
+void test();
 
-}
-int main() {
-    // Test problem 1
-    int testNumbers[] = {0,1,2,3,4,6,8,-2,256,255};
-    bool expected[] = {false, true, true, false, true, false, true, false, true, false};
-    // an array containing the 1 is true and 0 is false in the testnumber list
-    bool pass = true;
+    int main() {
+        // Test problem 1
+        int testNumbers[] = {0,1,2,3,4,6,8,-2,256,255};
+        bool expected[] = {false, true, true, false, true, false, true, false, true, false};
+        // an array containing the 1 is true and 0 is false in the testnumber list
+        bool pass = true;
 
-    for (int i = 0; i < 10; i++) {
-        bool resultLoop = is_power_of_2_loop(testNumbers[i]);
-        bool resultNoLoop = is_power_of_2_no_loop(testNumbers[i]);
-        if (resultLoop == expected[i] && resultNoLoop == expected[i]) {
+        for (int i = 0; i < 10; i++) {
+            bool resultLoop = is_power_of_2_loop(testNumbers[i]);
+            bool resultNoLoop = is_power_of_2_no_loop(testNumbers[i]);
+            if (resultLoop == expected[i] && resultNoLoop == expected[i]) {
+            } else {
+                pass = false; // If either one is incorrect, set pass to false
+            }
+        }
+        //if all pass test is correct, otherwise is fail
+        if (pass) {
+            cout << "PASS" << endl;
         } else {
-            pass = false; // If either one is incorrect, set pass to false
+            cout << "FAIL" << endl;
         }
-    }
-    //if all pass test is correct, otherwise is fail
-    if (pass) {
-        cout << "PASS" << endl;
-    } else {
-        cout << "FAIL" << endl;
+
+        // Test Problem 2
+        int testPrimes[] = {-5,0,1,2,3,4,9,17,25,7919};
+        bool expected2[] = {false, false, false, true, true, false, false, true, false, true};
+        for (int i = 0; i < 10; i++) {
+            bool result = isPrime(testPrimes[i]);
+            if (result != expected2[i]) {
+                //it take the prime with the test number and compare to the expected result true or false
+            }
+        }
+        if (pass) {
+            cout << "PASS" << endl;
+        } else {
+            cout << "FAIL" << endl;
+        }
+        // Test problem 3
+        test();
     }
 
-    // Test Problem 2
-    int testPrimes[] = {-5,0,1,2,3,4,9,17,25,7919};
-    bool expected2[] = {false, false, false, true, true, false, false, true, false, true};
-    for (int i = 0; i < 10; i++) {
-        bool result = isPrime(testPrimes[i]);
-        if (result != expected2[i]) {
-            //it take the prime with the test number and compare to the expected result true or false
+void test() {
+        fraction inputs [4] = {fraction(1,2),
+                            fraction(2,4),
+                            fraction(4,2),
+                            fraction(6,8),};
+
+        fraction outputs [4] = {fraction(1,2),
+                            fraction(1,2),
+                            fraction(2,1),
+                            fraction(3,4),};
+
+        for (int i = 0; i < 4; i++) {
+            fraction input = reduce (inputs[i]);
+            fraction expect = outputs[i];
+
+            fraction actual = reduce (input);
+
+            fraction actual_output = reduce(input);
+
+            if (expect ==actual) {
+            std::cout << "PASS" << std::endl;
+            } else {
+                std::cout << "FAIL" << std::endl;
+            }
+
         }
     }
-    if (pass) {
-        cout << "PASS" << endl;
-    } else {
-        cout << "FAIL" << endl;
-    }
-}
