@@ -61,7 +61,6 @@ bool isPrime(int n) {
 // -6/8 -> 3/-4
 
 
-
 class fraction {
 public:
     int numerator;
@@ -80,11 +79,46 @@ public:
     }
 };
 
-    fraction reduce (fraction input) {
-
+fraction reduce (fraction input) {
+    int divider = 2;
+    while (divider < input.numerator && divider < input.denominator) {
+        if (input.numerator % input.denominator == 0 && input.denominator % divider == 0) {
+            input.numerator/=divider;
+            input.denominator/=divider;
+            continue;
+        }
+        divider++;
     }
+    return input;
+}
 
-void test();
+void test() {
+        fraction inputs [4] = {fraction(1,2),
+                            fraction(2,4),
+                            fraction(4,2),
+                            fraction(6,8),};
+
+        fraction outputs [4] = {fraction(1,2),
+                            fraction(1,2),
+                            fraction(2,1),
+                            fraction(3,4),};
+
+        for (int i = 0; i < 4; i++) {
+            fraction input = reduce (inputs[i]);
+            fraction expect = outputs[i];
+
+            fraction actual = reduce (input);
+
+            fraction actual_output = reduce(input);
+
+            if (expect ==actual) {
+                std::cout << "PASS" << std::endl;
+            } else {
+                std::cout << "FAIL" << std::endl;
+            }
+
+        }
+    }
 
     int main() {
         // Test problem 1
@@ -124,32 +158,6 @@ void test();
         }
         // Test problem 3
         test();
-    }
 
-void test() {
-        fraction inputs [4] = {fraction(1,2),
-                            fraction(2,4),
-                            fraction(4,2),
-                            fraction(6,8),};
-
-        fraction outputs [4] = {fraction(1,2),
-                            fraction(1,2),
-                            fraction(2,1),
-                            fraction(3,4),};
-
-        for (int i = 0; i < 4; i++) {
-            fraction input = reduce (inputs[i]);
-            fraction expect = outputs[i];
-
-            fraction actual = reduce (input);
-
-            fraction actual_output = reduce(input);
-
-            if (expect ==actual) {
-            std::cout << "PASS" << std::endl;
-            } else {
-                std::cout << "FAIL" << std::endl;
-            }
-
-        }
+        return 0;
     }
