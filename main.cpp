@@ -1,4 +1,4 @@
-//i use GPT for the definition for every step to remind me this is how i usually learn in other language :D
+[1:50 AM, 4/4/2025] Brandon: //i use GPT for the definition for every step to remind me this is how i usually learn in other language :D
 #include <iostream>
 //This includes the iostream library, which allows input and output operations (e.g., using cout for printing).
 
@@ -21,6 +21,29 @@ bool is_power_of_2_loop(int n) {
 
 bool is_power_of_2_no_loop(int n) {
     if (n <= 0)
+       …
+[3:05 PM, 4/4/2025] Brandon: //i use GPT for the definition for every step to remind me this is how i usually learn in other language :D
+#include <iostream>
+//This includes the iostream library, which allows input and output operations (e.g., using cout for printing).
+
+using namespace std;
+//This allows us to use standard library functions without explicitly prefixing them with std::.
+
+//problem 1
+bool is_power_of_2_loop(int n) {
+    if (n <= 0)
+    while (n != 1) {
+        //as long as n is bigger then 1 loop diving by 2:
+        if (n % 2 != 0)
+            return false;
+        //if n is not divisible by 2 (n % 2) return false (cuz power2 always divisible by2)
+        n = n / 2;
+    }
+    return true;
+}
+
+bool is_power_of_2_no_loop(int n) {
+    if (n <= 0)
         return false;
     int power = 1;
     //1 is2^0
@@ -31,6 +54,7 @@ bool is_power_of_2_no_loop(int n) {
         // 1-2-4-8
         if (power > n / 2)
             break;
+        return false;
         //so that it doesnt go more than the limit
     }
     return (power == n);
@@ -80,43 +104,59 @@ public:
 };
 
 fraction reduce (fraction input) {
-    int divider = 2;
-    while (divider < input.numerator && divider < input.denominator) {
-        if (input.numerator % input.denominator == 0 && input.denominator % divider == 0) {
-            input.numerator/=divider;
-            input.denominator/=divider;
-            continue;
-        }
-        divider++;
+    if (input.denominator == 0) return input;
+
+    int gcd = input.numerator;
+    int temp = input.denominator;
+
+    while (temp != 0) {
+        int remainder = gcd % temp;
+        gcd = temp;
+        temp = remainder;
     }
+
+    gcd = abs(gcd);
+    if (gcd == 0) return input;
+
+    input.numerator /= gcd;
+    input.denominator /= gcd;
+
+    if (input.denominator < 0) {
+        input.numerator *= -1;
+        input.denominator *= -1;
+    }
+
     return input;
 }
 
 void test() {
-        fraction inputs [4] = {fraction(1,2),
-                            fraction(2,4),
-                            fraction(4,2),
-                            fraction(6,8),};
+    fraction inputs[7] = {
+        fraction(1,2),   // Should stay 1/2
+        fraction(2,4),   // Should become 1/2
+        fraction(4,2),    // Should become 2/1
+        fraction(6,8),    // Should become 3/4
+        fraction(30,45),  // Should become 2/3
+        fraction(-6,8),   // Should become -3/4
+        fraction(6,-14)   // Should become -3/7
+    };
 
-        fraction outputs [4] = {fraction(1,2),
-                            fraction(1,2),
-                            fraction(2,1),
-                            fraction(3,4),};
-
-        for (int i = 0; i < 4; i++) {
-            fraction input = reduce (inputs[i]);
-            fraction expect = outputs[i];
-
-            fraction actual = reduce (input);
-
-            fraction actual_output = reduce(input);
-
-            if (expect ==actual) {
-                std::cout << "PASS" << std::endl;
+    fraction outputs[7] = {
+        fraction(1,2),
+        fraction(1,2),
+        fraction(2,1),
+        fraction(3,4),
+        fraction(2,3),
+        fraction(-3,4),
+        fraction(-3,7)
+    };
+    cout << "Problem 3 Tests:" << endl;
+        for (int i = 0; i < 7; i++) {
+            fraction reduced = reduce(inputs[i]); // Reduce ONCE
+            if (reduced == outputs[i]) {
+                cout << "PASS" << endl;
             } else {
-                std::cout << "FAIL" << std::endl;
+                cout << "FAIL" << endl;
             }
-
         }
     }
 
