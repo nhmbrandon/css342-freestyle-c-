@@ -1,4 +1,4 @@
-[1:50 AM, 4/4/2025] Brandon: //i use GPT for the definition for every step to remind me this is how i usually learn in other language :D
+//i use GPT for the definition for every step to remind me this is how i usually learn in other language :D
 #include <iostream>
 //This includes the iostream library, which allows input and output operations (e.g., using cout for printing).
 
@@ -9,29 +9,6 @@ using namespace std;
 bool is_power_of_2_loop(int n) {
     if (n <= 0)
         return false;
-    while (n != 1) {
-        //as long as n is bigger then 1 loop diving by 2:
-        if (n % 2 != 0)
-            return false;
-        //if n is not divisible by 2 (n % 2) return false (cuz power2 always divisible by2)
-        n = n / 2;
-    }
-    return true;
-}
-
-bool is_power_of_2_no_loop(int n) {
-    if (n <= 0)
-       …
-[3:05 PM, 4/4/2025] Brandon: //i use GPT for the definition for every step to remind me this is how i usually learn in other language :D
-#include <iostream>
-//This includes the iostream library, which allows input and output operations (e.g., using cout for printing).
-
-using namespace std;
-//This allows us to use standard library functions without explicitly prefixing them with std::.
-
-//problem 1
-bool is_power_of_2_loop(int n) {
-    if (n <= 0)
     while (n != 1) {
         //as long as n is bigger then 1 loop diving by 2:
         if (n % 2 != 0)
@@ -54,7 +31,6 @@ bool is_power_of_2_no_loop(int n) {
         // 1-2-4-8
         if (power > n / 2)
             break;
-        return false;
         //so that it doesnt go more than the limit
     }
     return (power == n);
